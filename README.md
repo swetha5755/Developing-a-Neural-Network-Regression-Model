@@ -9,6 +9,8 @@ Explain the problem statement
 ## Neural Network Model
 Include the neural network model diagram.
 
+<img width="1877" height="1005" alt="image" src="https://github.com/user-attachments/assets/43ab895c-fa69-44d3-b92d-2a1656098261" />
+
 ## DESIGN STEPS
 ### STEP 1: 
 
@@ -44,37 +46,69 @@ Use the trained model to predict  for a new input value .
 
 ## PROGRAM
 
-### Name:
+### Name: Swetha S
 
-### Register Number:
+### Register Number:212224040344
 
 ```python
 class NeuralNet(nn.Module):
     def __init__(self):
         super().__init__()
-        #Include your code here
+        self.fc1=nn.Linear(1,8)
+        self.fc2=nn.Linear(8,10)
+        self.fc3=nn.Linear(10,1)
+        self.relu=nn.ReLU()
+        self.history={'loss':[]}
+        
+  def forward(self,x):
+    x=self.relu(self.fc1(x))
+    x=self.relu(self.fc2(x))
+    x=self.fc3(x)
+    return x
 
 
 
 # Initialize the Model, Loss Function, and Optimizer
-
+ai_brain=NeuralNet()
+criterion=nn.MSELoss()
+optimizer=optim.RMSprop(ai_brain.parameters(),lr=0.001)
 
 
 def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
-    #Include your code here
+    for epoch in range(epochs):
+      optimizer.zero_grad()
+      loss = criterion(ai_brain(X_train),y_train)
+      loss.backward()
+      optimizer.step()
+
+
+
+
+      ai_brain.history['loss'].append(loss.item())
+      if epoch % 200 == 0:
+            print(f'Epoch [{epoch}/{epochs}], Loss: {loss.item():.6f}')
+
 
 ```
 
 ### Dataset Information
 Include screenshot of the generated data
 
+<img width="298" height="632" alt="image" src="https://github.com/user-attachments/assets/0d834f03-009c-4f11-91da-67ef13f0a86d" />
+
+
 ### OUTPUT
 
 ### Training Loss Vs Iteration Plot
 Include your plot here
 
+<img width="1163" height="714" alt="image" src="https://github.com/user-attachments/assets/eba190ed-5767-40dc-b25c-63ad478770f2" />
+
+
 ### New Sample Data Prediction
 Include your sample input and output here
+<img width="1170" height="163" alt="image" src="https://github.com/user-attachments/assets/a7762483-095c-4e94-988c-c0008a63a46d" />
+
 
 ## RESULT
 Thus, a neural network regression model was successfully developed and trained using PyTorch.
